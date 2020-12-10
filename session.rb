@@ -1,6 +1,8 @@
 require_relative "talks"
 
 class Session
+  attr_reader :talks, :year, :month, :day, :availabe_minutes
+
   def initialize(talks)
     @talks = talks
     @year, @month, @day = 2020, 12, 10
@@ -9,9 +11,16 @@ class Session
   end
 
   def morning_sessions
-    @start_time = Time.local(year, month, day, 9)
-    @end_time = Time.local(year, month, day, 12)
-    availabe_minutes = (@start_time.to_i - @end_time.to_i)
+    @start_time = Time.local(@year, @month, @day, 9)
+    @end_time = Time.local(@year, @month, @day, 12)
+    puts @availabe_minutes = (@end_time.to_i - @start_time.to_i) / 60
+    @talks.each do |talk, time|
+      if time <= @availabe_minutes
+        puts "#{@start_time.strftime("%I:%M %p")} #{talk} #{time}"
+        @availabe_minutes -= time
+        @start_time += time * 60
+      end
+    end
 
   end
 
@@ -24,4 +33,4 @@ class Session
 end
 
 
-Session.new(Talks::TALKS)
+Session.new(Talks::TALKS).morning_sessions
