@@ -37,6 +37,3 @@ class Session
 end
 
 
-session = Session.new(Talks::TALKS)
-session.morning_sessions
-session.afternoon_sessions
