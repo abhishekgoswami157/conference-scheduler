@@ -13,6 +13,17 @@ class Session
   def morning_sessions
     @start_time = Time.local(@year, @month, @day, 9)
     @end_time = Time.local(@year, @month, @day, 12)
+    handle_scheduling
+  end
+
+  def afternoon_sessions
+    @start_time = Time.local(year, month, day, 13)
+    @end_time = Time.local(year, month, day, 17)
+    availabe_minutes = (@start_time.to_i - @end_time.to_i)
+    handle_scheduling
+  end
+
+  def handle_scheduling
     puts @availabe_minutes = (@end_time.to_i - @start_time.to_i) / 60
     @talks.each do |talk, time|
       if time <= @availabe_minutes
@@ -21,16 +32,11 @@ class Session
         @start_time += time * 60
       end
     end
-
-  end
-
-  def afternoon_sessions
-    @start_time = Time.local(year, month, day, 13)
-    @end_time = Time.local(year, month, day, 17)
-    availabe_minutes = (@start_time.to_i - @end_time.to_i)
   end
 
 end
 
 
-Session.new(Talks::TALKS).morning_sessions
+session = Session.new(Talks::TALKS)
+session.morning_sessions
+session.afternoon_sessions
