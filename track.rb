@@ -1,6 +1,7 @@
 class Track
-  def initialize
+  def initialize(name)
     # @track = nil
+    @name = name
     @sessions = []
   end
 
@@ -8,8 +9,8 @@ class Track
     @sessions << talk
   end
 
-  def display_session
-    track = "\nTrack 1 \n"
+  def display_tracks
+    track = "\nTrack #{@name} \n"
     @sessions.each do |session|
       track += "\n#{session}\n"
     end
